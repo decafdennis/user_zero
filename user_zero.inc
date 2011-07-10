@@ -20,6 +20,13 @@ function user_zero_fix_anonymous_user() {
       db_query("UPDATE {users} SET uid = %d WHERE uid = %d", USER_ZERO_ANONYMOUS_UID, $inserted_uid);
     }
     
-    watchdog('user_zero', 'Fixed missing anonymous user', array(), WATCHDOG_WARNING);
+    watchdog('user_zero', 'Recreated anonymous user', array(), WATCHDOG_WARNING);
+  }
+  
+  // Ensure the anonymous user has the anonymous role
+  db_query("INSERT IGNORE INTO {users_roles} (uid, rid) VALUES (%d, %d)", USER_ZERO_ANONYMOUS_UID, DRUPAL_ANONYMOUS_RID);
+  
+  if (db_affected_rows() > 0) {
+    watchdog('user_zero', 'Reassigned anonymous role to anonymous user', array(), WATCHDOG_WARNING);
   }
 }
