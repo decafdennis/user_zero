@@ -1,0 +1,4 @@
+; Developed by Dennis Stevense for Digital Deployment
+name = User zero
+description = Does its best to prevent user zero from being deleted and recreates it if necessary.
+core = 6.x
